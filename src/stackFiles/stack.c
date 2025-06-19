@@ -81,7 +81,8 @@ stackerr_t spop(int_sp *pstack, int *out)
 		else
 			result = STACK_EMPTY; // Stack must be empty then
 	}
-	else; // Something's wrong with the parameter
+	else
+		result = STACK_ERROR; // Something's wrong with the parameter
 	return result;
 }
 
