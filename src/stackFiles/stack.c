@@ -69,6 +69,7 @@ stackerr_t spop(int_sp *pstack, int *out)
 				stack->_DO_NOT_MODIFY_COUNT--;
 				stack->next = NULL;
 			}
+			// Otherwise, free the head and move the succeeding head to the front
 			else
 			{
 				pTemp = stack->next;
@@ -92,6 +93,7 @@ int sfirst(int_sp stack) { return stack != NULL && stack->value != NULL ? *stack
 // Returns second value from the top if successful, otherwise returns STACK_ERROR
 int ssecond(int_sp stack) { return stack != NULL && stack->next != NULL ? *stack->next->value : STACK_ERROR; }
 
+// Collapses a stack instance by disposing all of its nodes
 stackerr_t sdestroy(int_sp *pstack)
 {
 	int pop;
