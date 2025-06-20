@@ -1,22 +1,17 @@
 #include "stack.h"
 
-// Creates a new stack instance
-void screate(int_sp *stack) { *stack = calloc(1, sizeof(struct _INTSTACKT)); }
+bool screate(int_sp *stack) { return (*stack = calloc(1, sizeof(struct _INTSTACKT))) != NULL; }
 
-// Checks if full
 bool sfull(int_sp stack) { return MAX_STACK == stack->_DO_NOT_MODIFY_COUNT; }
 
-// Checks if empty
 bool sempty(int_sp stack) { return 0 == stack->_DO_NOT_MODIFY_COUNT && NULL == stack->next; }
 
 stackerr_t spush(int_sp *pstack, int value)
 {
 	// Declarations
 	int_sp stack, u;
-	stackerr_t result;
 	// Check if pointer is valid
-	result = pstack != NULL && *pstack != NULL;
-	if (result)
+	if (pstack != NULL && *pstack != NULL)
 	{
 		// Para di nakakalito
 		stack = *pstack;
@@ -37,28 +32,21 @@ stackerr_t spush(int_sp *pstack, int value)
 			u->next = stack;
 			*pstack = u;
 		}
-		else
-			result = STACK_FULL; // Stack must be full then
+		else return STACK_FULL; // Stack must be full then
 	}
-	else
-		result = STACK_ERROR; // Something's wrong with the parameter
-	return result;
+	else return STACK_ERROR;
+	return 1;
 }
 
 stackerr_t spop(int_sp *pstack, int *out)
 {
 	// Declarations
-	int_sp pTemp, stack;
-	stackerr_t result;
+	int_sp temp, stack;
 	// Check if pointer is valid
-	result = pstack != NULL && *pstack != NULL;
-	if (result)
+	if (pstack != NULL && *pstack != NULL)
 	{
-		// Para di nakakalito
 		stack = *pstack;
-		// Check if empty
-		result = !sempty(stack);
-		if (result)
+		if (!sempty(stack))
 		{
 			// Check if the head is the only node of the stack
 			// If so, simply remove the value of the head
@@ -72,28 +60,41 @@ stackerr_t spop(int_sp *pstack, int *out)
 			// Otherwise, free the head and move the succeeding head to the front
 			else
 			{
-				pTemp = stack->next;
+				temp = stack->next;
 				*out = *stack->value;
 				free(stack->value);
 				free(stack);
-				*pstack = pTemp;
+				*pstack = temp;
 			}
 		}
-		else
-			result = STACK_EMPTY; // Stack must be empty then
+		else return STACK_EMPTY; // Stack is empty
 	}
-	else
-		result = STACK_ERROR; // Something's wrong with the parameter
-	return result;
+	else return STACK_ERROR; // Stack passed is invalid or corrupted
+	return 1;
 }
 
-// Returns top value if successful, otherwise returns STACK_ERROR
-int sfirst(int_sp stack) { return stack != NULL && stack->value != NULL ? *stack->value : STACK_ERROR; }
+stackerr_t sfirst(int_sp stack, int *out)
+{
+	if (stack != NULL && out != NULL)
+		if (!sempty(stack))
+			*out = *stack->value;
+		else return STACK_EMPTY;
+	else return STACK_ERROR;
+	return 1;
+}
 
-// Returns second value from the top if successful, otherwise returns STACK_ERROR
-int ssecond(int_sp stack) { return stack != NULL && stack->next != NULL ? *stack->next->value : STACK_ERROR; }
+stackerr_t ssecond(int_sp stack, int *out)
+{
+	if (stack != NULL && out != NULL)
+		if (!sempty(stack))
+			if (stack->next != NULL)
+				*out = *stack->next->value;
+			else return STACK_NOSECOND;
+		else return STACK_EMPTY;
+	else return STACK_ERROR;
+	return 1;
+}
 
-// Collapses a stack instance by disposing all of its nodes
 stackerr_t sdestroy(int_sp *pstack)
 {
 	int pop;
