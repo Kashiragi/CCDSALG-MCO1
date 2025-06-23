@@ -1,2 +1,22 @@
-//Contains the slow and fast sorting algo
-//Function declarations here
+#ifndef SORT_H
+#define SORT_H
+#include <math.h>
+
+typedef struct {
+    double x;
+    double y;
+} Point;
+
+extern Point anchor;
+
+double computePolarAngle(Point p1, Point p2);
+double computeDistance(Point p1, Point p2);
+int comparePoints(Point a, Point b);
+
+void selectionSort(Point points[], int n);
+void mergeSort(Point points[], int n);
+
+void mergeSortHelper(Point points[], Point temp[], int left, int right);
+void merge(Point points[], Point temp[], int left, int mid, int right);
+
+#endif 
