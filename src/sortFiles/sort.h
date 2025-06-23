@@ -1,13 +1,7 @@
 #ifndef SORT_H
 #define SORT_H
 #include <math.h>
-
-typedef struct {
-    double x;
-    double y;
-} Point;
-
-extern Point anchor;
+#include "globals.h"
 
 double computePolarAngle(Point p1, Point p2);
 double computeDistance(Point p1, Point p2);

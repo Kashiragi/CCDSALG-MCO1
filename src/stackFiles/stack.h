@@ -1,6 +1,7 @@
 #include "stdlib.h"
 #include "assert.h"
 #include "stdbool.h"
+#include "globals.h"
 
 // Max stack is 2^15 = 32768.
 #define MAX_STACK (1<<15)
@@ -16,15 +17,6 @@
 #define STACK_NOSECOND -0x57AC5010
 // "STAC(K) CORR(upted)". Stack is invalid or not working as intended.
 #define STACK_ERROR -0x57ACC077
-
-typedef struct _INTSTACKT
-{
-	int _DO_NOT_MODIFY_COUNT;
-	int *value;
-	struct _INTSTACKT *next;
-} *int_sp;
-
-typedef int stackerr_t;
 
 /// <summary>
 /// Creates a new stack instance.
