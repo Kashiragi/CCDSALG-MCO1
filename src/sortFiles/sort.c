@@ -1,6 +1,4 @@
 #include "sort.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 // Ensure M_PI is defined (portable fallback)
 #ifndef M_PI
