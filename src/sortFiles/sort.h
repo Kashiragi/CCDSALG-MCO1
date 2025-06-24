@@ -1,6 +1,5 @@
 #ifndef SORT_H
 #define SORT_H
-#include <math.h>
 #include "globals.h"
 
 double computePolarAngle(Point p1, Point p2);
