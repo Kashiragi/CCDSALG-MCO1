@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include "stackFiles/stack.c"
-#include "sortFiles/sort.c"
+#include "globals.h"
+#include "stackFiles/stack.h"
+#include "sortFiles/sort.h"
 //#include "graham_scan2.c" ->> the actual include. stack and sort temporarily
 //Main module for the fast version
 
