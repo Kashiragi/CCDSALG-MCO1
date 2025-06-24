@@ -1,12 +1,5 @@
 #include "sort.h"
 
-// Ensure M_PI is defined (portable fallback)
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-#include <math.h>
-
 // contains the slow and fast sorting algo
 
 // Function implementation
