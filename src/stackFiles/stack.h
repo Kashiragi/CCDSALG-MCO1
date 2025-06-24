@@ -1,6 +1,6 @@
 #ifndef STACK_H
 #define STACK_H
-#include "globals.h"
+#include "../globals.h"
 
 /// <summary>
 /// Creates a new stack instance.
