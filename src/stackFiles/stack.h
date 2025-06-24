@@ -1,3 +1,5 @@
+#ifndef STACK_H
+#define STACK_H
 #include "globals.h"
 
 /// <summary>
@@ -81,3 +83,5 @@ stackerr_t ssecond(point_sp stack, Point **out);
 /// and STACK_ERROR if the stack is not fully disposed due to invalidity.
 /// </returns>
 stackerr_t sdestroy(point_sp *pstack);
+
+#endif
