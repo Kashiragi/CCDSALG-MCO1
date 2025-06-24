@@ -3,21 +3,46 @@
 //to avoid double inclusion
 #define GLOBALS_H
 
+#include "stdio.h"
+#include "stdlib.h"
+#include "stdbool.h"
+#include "math.h"
+#include "assert.h"
+
+// Max stack is 2^15 = 32768.
+#define MAX_STACK (1<<15)
+
+// Error codes
+
+// "STAC(K) OVER(load)". Stack has reached its upper limit.
+#define STACK_FULL 0X57AC05E7
+// "STAC(K) ZERO". Stack has zero nodes.
+#define STACK_EMPTY 0x57AC2E70
+// "STAC(K) SOLO". Exclusively for ssecond(). 
+// There is only one node in the stack and no second node to seek.
+#define STACK_NOSECOND 0x57AC5010
+// "STAC(K) CORR(upted)". Stack is invalid or not working as intended.
+#define STACK_ERROR 0x57ACC077
+
+#ifndef M_PI
+#define M_PI 3.141592653589793238462643383279502884L
+#endif
+
+//sort related
+typedef struct {
+	double x;
+	double y;
+} Point;
+
 //stack related
 typedef struct _INTSTACKT
 {
 	int _DO_NOT_MODIFY_COUNT;
-	int *value;
+	Point *value;
 	struct _INTSTACKT *next;
-} *int_sp;
+} *point_sp;
 
 typedef int stackerr_t;
-
-//sort related
-typedef struct {
-    double x;
-    double y;
-} Point;
 
 extern Point anchor;
 
