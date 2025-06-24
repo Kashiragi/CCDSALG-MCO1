@@ -1,15 +1,15 @@
 #include "stack.h"
 
-bool screate(int_sp *stack) { return (*stack = calloc(1, sizeof(struct _INTSTACKT))) != NULL; }
+bool screate(point_sp *stack) { return (*stack = calloc(1, sizeof(struct _INTSTACKT))) != NULL; }
 
-bool sfull(int_sp stack) { return MAX_STACK == stack->_DO_NOT_MODIFY_COUNT; }
+bool sfull(point_sp stack) { return MAX_STACK == stack->_DO_NOT_MODIFY_COUNT; }
 
-bool sempty(int_sp stack) { return 0 == stack->_DO_NOT_MODIFY_COUNT && NULL == stack->next; }
+bool sempty(point_sp stack) { return 0 == stack->_DO_NOT_MODIFY_COUNT && NULL == stack->next; }
 
-stackerr_t spush(int_sp *pstack, int value)
+stackerr_t spush(point_sp *pstack, Point value)
 {
 	// Declarations
-	int_sp stack, u;
+	point_sp stack, u;
 	// Check if pointer is valid
 	if (pstack != NULL && *pstack != NULL)
 	{
@@ -18,7 +18,7 @@ stackerr_t spush(int_sp *pstack, int value)
 		// If empty, just change head value
 		if (sempty(stack))
 		{
-			assert(stack->value = malloc(sizeof(int)));
+			assert(stack->value = malloc(sizeof(Point)));
 			*stack->value = value;
 			stack->_DO_NOT_MODIFY_COUNT++;
 		}
@@ -26,7 +26,7 @@ stackerr_t spush(int_sp *pstack, int value)
 		else if (!sfull(stack))
 		{
 			screate(&u);
-			assert(u->value = malloc(sizeof(int)));
+			assert(u->value = malloc(sizeof(Point)));
 			*u->value = value;
 			u->_DO_NOT_MODIFY_COUNT = stack->_DO_NOT_MODIFY_COUNT + 1;
 			u->next = stack;
@@ -38,10 +38,10 @@ stackerr_t spush(int_sp *pstack, int value)
 	return 1;
 }
 
-stackerr_t spop(int_sp *pstack, int *out)
+stackerr_t spop(point_sp *pstack, Point *out)
 {
 	// Declarations
-	int_sp temp, stack;
+	point_sp temp, stack;
 	// Check if pointer is valid
 	if (pstack != NULL && *pstack != NULL)
 	{
@@ -73,31 +73,31 @@ stackerr_t spop(int_sp *pstack, int *out)
 	return 1;
 }
 
-stackerr_t sfirst(int_sp stack, int *out)
+stackerr_t sfirst(point_sp stack, Point **out)
 {
 	if (stack != NULL && out != NULL)
 		if (!sempty(stack))
-			*out = *stack->value;
+			*out = stack->value;
 		else return STACK_EMPTY;
 	else return STACK_ERROR;
 	return 1;
 }
 
-stackerr_t ssecond(int_sp stack, int *out)
+stackerr_t ssecond(point_sp stack, Point **out)
 {
 	if (stack != NULL && out != NULL)
 		if (!sempty(stack))
 			if (stack->next != NULL)
-				*out = *stack->next->value;
+				*out = stack->next->value;
 			else return STACK_NOSECOND;
 		else return STACK_EMPTY;
 	else return STACK_ERROR;
 	return 1;
 }
 
-stackerr_t sdestroy(int_sp *pstack)
+stackerr_t sdestroy(point_sp *pstack)
 {
-	int pop;
+	Point pop;
 	stackerr_t result;
 	result = pstack != NULL && *pstack != NULL;
 	if (result)
