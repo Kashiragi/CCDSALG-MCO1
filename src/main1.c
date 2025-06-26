@@ -8,8 +8,8 @@ int main(){
 
     FILE *inFile, *outFile;
     int sampleSize, hullSize;
-    Point inPoint;
-    int_sp inPointStk, hullStack;
+    Point inPoint, temp_point;
+    point_sp inPointStk, hullStack;
 
     screate(inPointStk);
 
@@ -37,8 +37,11 @@ int main(){
     outFile = fopen("SAMPLE OUTPUT 1.txt", "w");
     fprint(outFile, "*Number of Points: %d\n", hullSize);
     while(!sempty(hullStack)){
-        fprintf(outFile, "%.6lf %.6lf", hullStack->value);
-        spop(hullStack, (*hullStack).value);
+        fprintf(outFile, "%.6lf %.6lf", hullStack->value->x, hullStack->value->y);
+        // parameter 2 is wrong dun sa previous line na nakalagay dito
+        // pero idk where I should store the point, kaya nilagay ko muna sa temporary variable
+        // paayos nalang T_T
+        spop(hullStack, &temp_point);
     }
     fclose(outFile);
     return 0;
