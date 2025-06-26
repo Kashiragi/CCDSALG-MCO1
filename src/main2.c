@@ -9,7 +9,7 @@ int main(){
     FILE *inFile, *outFile;
     int sampleSize, hullSize;
     Point inPoint;
-    int_sp inPointStk, hullStack;
+    point_sp inPointStk, hullStack;
 
     screate(inPointStk);
 
@@ -38,7 +38,8 @@ int main(){
     fprint(outFile, "*Number of Points: %d\n", hullSize);
     while(!sempty(hullStack)){
         fprintf(outFile, "%.6lf %.6lf", hullStack->value);
-        spop(hullStack, (*hullStack).value);
+        //spop(hullStack, (*hullStack).value);
+        spop(hullStack, hullStack->value);
     }
     fclose(outFile);
     return 0;
