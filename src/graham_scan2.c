@@ -49,3 +49,32 @@ int checkOrientation(Point previous, Point current, Point next){
     
     return (crossProd > 0) ? 1 : (crossProd < 0) ? -1 : 0;
 }
+
+point_sp graham_scan_slow(Point points[], int sampleSize){
+    
+    // determine anchor point using search
+
+    // merge sort the array
+
+    // initialize working stack
+    // push first 3 points into stack
+
+    // i = 2
+    /**
+     *  while i!=sampleSize
+     *      
+     *      p = next to top
+     *      c = top
+     *      n = point[i]
+     *      
+     *      orie = orientation(p,c,n)
+     * 
+     *      if +1, push(n), i++
+     *      else if 0, pop(top), push(n), i++
+     *      else if -1, pop(top)
+    */
+    
+    // reverse working stack into final stack (sicne ang output ay anchor first)
+
+    // return final stack
+}
