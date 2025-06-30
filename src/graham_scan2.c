@@ -59,11 +59,7 @@ point_sp graham_scan_slow(Point points[], int sampleSize){
     // initialize working stack
     // push first 3 points into stack
 
-<<<<<<< HEAD
     // i = 2
-=======
-    // i = 3
->>>>>>> refs/remotes/origin/main
     /**
      *  while i!=sampleSize
      *      
