@@ -109,8 +109,8 @@ stackerr_t sarray(point_sp *stack, Point **out)
 	// Push back to the stack so that it maintains its form again
 	for (i = 0; i < k; i++)
 		spush(stack, (*out)[i]);
-	// Reverse the array with the mirror method
-	for (i = 0, j = k - 1; i < k / 2; i++, j--)
+	// Reverse the array with the mirror method (since stack is LIFO)
+	for (i = 1, j = k-1; i <= k / 2; i++, j--)
 		temp = (*out)[j], (*out)[j] = (*out)[i], (*out)[i] = temp;
 	// Return number of elements in the allocated array
 	return k;
