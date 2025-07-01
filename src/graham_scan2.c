@@ -37,7 +37,7 @@
  * @param current the pivot point; where the angle is pivoted on
  * @param next the next point being check if it should be added to the hull or not
  */
-int checkOrientation(Point previous, Point current, Point next){
+int checkCCW(Point previous, Point current, Point next){
     // Intermediate computations
     // let uxv (cross) = x1 x y2 - x2 x y1 
     // vectorCN
@@ -50,31 +50,59 @@ int checkOrientation(Point previous, Point current, Point next){
     return (crossProd > 0) ? 1 : (crossProd < 0) ? -1 : 0;
 }
 
-point_sp graham_scan_slow(Point points[], int sampleSize){
-    
+void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSize){
+    int i;
+    point_sp workStk;
     // determine anchor point using search
+    for (i = 1, anchor = points[0]; i < sampleSize; i++)
+		if (points[i].y < anchor.y)
+			anchor = points[i];
 
     // merge sort the array
+    mergeSort(points,sampleSize);
 
     // initialize working stack
+    screate(&workStk);
     // push first 3 points into stack
 
+
     // i = 2
-    /**
-     *  while i!=sampleSize
-     *      
-     *      p = next to top
-     *      c = top
-     *      n = point[i]
-     *      
-     *      orie = orientation(p,c,n)
-     * 
-     *      if +1, push(n), i++
-     *      else if 0, pop(top), push(n), i++
-     *      else if -1, pop(top)
-    */
+    i = 0;
+    while(i<sampleSize){
+        //    while i!=sampleSize
+        //    
+        //    p = next to top
+        //   c = top
+        //    n = point[i]
+        //    
+        //    orie = orientation(p,c,n)
+
+        Point *p = NULL, *c=NULL, dump= (Point){0,0};
+        ssecond(workStk,&p);
+        sfirst(workStk,&c);
+        if(i<3 || checkCCW(*p, *c, points[i])==1){
+            spush(&workStk, points[i]);
+            i++;
+        }
+        else if (i>=3 && checkCCW(*p,*c,points[i])==0){
+            spop(&workStk, &dump);
+            spush(&workStk, points[i]);
+            i++;
+        }
+        else if (i>=3 &&checkCCW(*p,*c,points[i])==-1){
+            spop(&workStk, &dump);
+        }
+        //   
+            //   if +1, push(n), i++
+            //    else if 0, pop(top), push(n), i++
+            //    else if -1, pop(top)
+
+    }
     
+    sarray(&workStk, hull);
+    *hullSize = workStk->_DO_NOT_MODIFY_COUNT;
     // reverse working stack into final stack (sicne ang output ay anchor first)
 
+    sdestroy(&workStk);
     // return final stack
 }
