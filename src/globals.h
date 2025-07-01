@@ -14,15 +14,15 @@
 
 // Error codes
 
-// "STAC(K) OVER(load)". Stack has reached its upper limit.
-#define STACK_FULL 0X57AC05E7
-// "STAC(K) ZERO". Stack has zero nodes.
-#define STACK_EMPTY 0x57AC2E70
-// "STAC(K) SOLO". Exclusively for ssecond(). 
+// "OVER(load)". Stack has reached its upper limit.
+#define STACK_FULL -0x05E7
+// "ZERO". Stack has zero nodes.
+#define STACK_EMPTY -0x2E70
+// "SOLO". Exclusively for ssecond(). 
 // There is only one node in the stack and no second node to seek.
-#define STACK_NOSECOND 0x57AC5010
-// "STAC(K) CORR(upted)". Stack is invalid or not working as intended.
-#define STACK_ERROR 0x57ACC077
+#define STACK_NOSECOND -0x5010
+// "CORR(upted)". Stack is invalid or not working as intended.
+#define STACK_ERROR -0xC077
 
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884L
