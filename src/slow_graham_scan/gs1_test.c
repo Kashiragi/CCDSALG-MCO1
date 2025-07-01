@@ -8,22 +8,15 @@
 //    gcc -mrdrnd -Wall <linked set of c files>
 int main()
 {
-	int i, result_count;
-	Point *rgp;
-	Point *result;
-	rpt(&rgp, 50, RPT_SIZE);
+	int i, j, result_count;
+	//Point rgp[9] = {{5,5},{10,2.5},{5,10},{10,0},{7.5,0},{5,0},{0,0},{1,8},{0,10}};
+	Point *rgp = NULL, *result = NULL;
 
-	printf("Points are...\n");
-	for (i = 0; i < RPT_SIZE; i++)
-		printf("%.2lf;%.2lf\n", rgp[i].x, rgp[i].y);
-	printf("\n");
-
-	slow_graham_scan(rgp, RPT_SIZE, &result, &result_count);
-
-	printf("Convex hull points are...\n");
-	for (i = 0; i < result_count; i++)
-		printf("%.2lf;%.2lf\n", result[i].x, result[i].y);
-	printf("\n");
+	for (j = 6, i = (int)pow(2, j); i <= (int)pow(2, 15); j++, i = (int)pow(2, j))
+	{
+		rpt(&rgp, 4000, i);
+		slow_graham_scan(rgp, i, &result, &result_count);
+	}
 
 	free(result);
 	free(rgp);
