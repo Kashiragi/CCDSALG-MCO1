@@ -3,7 +3,10 @@
 #include <time.h>
 #include <stdio.h>
 
-#define
+#define STEP  (1024)
+#define LIMIT (32768)
+
+Point anchor;
 //Graham's scan using fast version
 
 /**
@@ -54,8 +57,15 @@ int checkCCW(Point previous, Point current, Point next){
 }
 
 void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSize){
+    //declarations
     int i;
     point_sp workStk;
+    //timer related
+    long long ctr;
+    clock_t startTm, endTm;
+
+    startTm = clock();
+    
     // step by step implementation using these key steps
     // https://www.numberanalytics.com/blog/mastering-grahams-scan-algorithm
 
@@ -115,4 +125,7 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
     *hullSize = workStk->_DO_NOT_MODIFY_COUNT;
 
     sdestroy(&workStk);
+
+    endTm = clock();
+    printf("%6ld %15lf\n", sampleSize, (double)(endTm - startTm)); 
 }
