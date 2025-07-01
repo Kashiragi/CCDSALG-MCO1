@@ -1,6 +1,11 @@
-#include "sortFiles\sort.c"
-#include "stackFiles\stack.c"
+#include "..\sortFiles\sort.c"
+#include "..\stackFiles\stack.c"
 
+#include "..\random_point_generator\rpt.h"
+
+#define RPT_SIZE 16
+
+Point anchor;
 //Graham's scan using fast version
 
 /**
