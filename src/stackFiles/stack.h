@@ -1,6 +1,6 @@
 #ifndef STACK_H
 #define STACK_H
-#include "../globals.h"
+#include "globals.h"
 
 /// <summary>
 /// Creates a new stack instance.
@@ -72,6 +72,20 @@ stackerr_t sfirst(point_sp stack, Point **out);
 /// The value of *out remains unchanged if the process is unsuccessful.
 /// </returns>
 stackerr_t ssecond(point_sp stack, Point **out);
+
+/// <summary>
+/// Allocates an array to put all the contents of the stack. This does not affect the original stack.
+/// </summary>
+/// <param name="stack">- Stack to get an array copy of.</param>
+/// <param name="out">- Pointer to an address where the new array would be allocated into.</param>
+/// <param name="arrcnt">- Number of elements stored within the array.</param>
+/// <returns>
+/// If successful, this returns the number of elements allocated into the array.
+/// Returns STACK_EMPTY if there are no elements inside the stack.
+/// Returns STACK_ERROR otherwise.
+/// Address pointed to by *out remains unchanged if the process is unsuccessful.
+/// </returns>
+stackerr_t sarray(point_sp *stack, Point **out);
 
 /// <summary>
 /// Collapses a stack along with the nodes stored within it.
