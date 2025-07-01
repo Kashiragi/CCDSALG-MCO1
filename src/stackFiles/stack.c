@@ -97,16 +97,23 @@ stackerr_t ssecond(point_sp stack, Point **out)
 
 stackerr_t sarray(point_sp *stack, Point **out)
 {
-	int i, j = (*stack)->_DO_NOT_MODIFY_COUNT;
-	if (0 == j)
+	int i, j, k = (*stack)->_DO_NOT_MODIFY_COUNT;
+	Point temp = { 0,0 };
+	if (0 == k)
 		return STACK_EMPTY;
-	if (NULL == (*out = malloc(j * sizeof(Point))))
+	if (NULL == (*out = malloc(k * sizeof(Point))))
 		return STACK_ERROR;
-	for (i = 0; i < j; i++)
+	// Pop and load into the allocated array
+	for (i = 0; i < k; i++)
 		spop(stack, &(*out)[i]);
-	for (i = 0; i < j; i++)
+	// Push back to the stack so that it maintains its form again
+	for (i = 0; i < k; i++)
 		spush(stack, (*out)[i]);
-	return j;
+	// Reverse the array with the mirror method
+	for (i = 0, j = k - 1; i < k / 2; i++, j--)
+		temp = (*out)[j], (*out)[j] = (*out)[i], (*out)[i] = temp;
+	// Return number of elements in the allocated array
+	return k;
 }
 
 stackerr_t sdestroy(point_sp *pstack)
