@@ -1,11 +1,6 @@
 #include "..\sortFiles\sort.c"
 #include "..\stackFiles\stack.c"
 
-#include "..\random_point_generator\rpt.h"
-
-#define RPT_SIZE 16
-
-Point anchor;
 //Graham's scan using fast version
 
 /**
@@ -60,20 +55,28 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
     point_sp workStk;
     // determine anchor point using search
     for (i = 1, anchor = points[0]; i < sampleSize; i++)
-		if (points[i].y < anchor.y)
-			anchor = points[i];
-
+    if ((points[i].y < anchor.y) || (points[i].y == anchor.y && points[i].x < anchor.x))
+    anchor = points[i];
+    
     // merge sort the array
     mergeSort(points,sampleSize);
-
+    
     // initialize working stack
     screate(&workStk);
-    // push first 3 points into stack
-
-
-    // i = 2
+    
     i = 0;
+    Point *p = NULL, *c=NULL, dump= (Point){0,0};
     while(i<sampleSize){
+        // check if not empty
+        // check if first exists
+        // check if second or next to top exists
+        // check if collinear or clockwise. will continuously remove all collinear
+        while(!sempty(workStk) && sfirst(workStk,&c)!=STACK_EMPTY && ssecond(workStk,&p)!=STACK_NOSECOND && checkCCW(*p,*c,points[i])<=0){
+            spop(&workStk, &dump);
+        }
+        spush(&workStk, points[i]);
+        i++;
+        //    pseudo/old code
         //    while i!=sampleSize
         //    
         //    p = next to top
@@ -81,22 +84,18 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
         //    n = point[i]
         //    
         //    orie = orientation(p,c,n)
-
-        Point *p = NULL, *c=NULL, dump= (Point){0,0};
-        ssecond(workStk,&p);
-        sfirst(workStk,&c);
-        if(i<3 || checkCCW(*p, *c, points[i])==1){
-            spush(&workStk, points[i]);
-            i++;
-        }
-        else if (i>=3 && checkCCW(*p,*c,points[i])==0){
-            spop(&workStk, &dump);
-            spush(&workStk, points[i]);
-            i++;
-        }
-        else if (i>=3 &&checkCCW(*p,*c,points[i])==-1){
-            spop(&workStk, &dump);
-        }
+        // if(i<3 || checkCCW(*p, *c, points[i])==1){
+        //     spush(&workStk, points[i]);
+        //     i++;
+        // }
+        // else if (i>=3 && checkCCW(*p,*c,points[i])==0){
+        //     spop(&workStk, &dump);
+        //     spush(&workStk, points[i]);
+        //     i++;
+        // }
+        // else if (i>=3 &&checkCCW(*p,*c,points[i])==-1){
+            //     spop(&workStk, &dump);
+            // }
         //   
             //   if +1, push(n), i++
             //    else if 0, pop(top), push(n), i++
@@ -104,10 +103,10 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
 
     }
     
+    // reverse working stack into final stack (sicne ang output ay anchor first)
+    // return final stack
     sarray(&workStk, hull);
     *hullSize = workStk->_DO_NOT_MODIFY_COUNT;
-    // reverse working stack into final stack (sicne ang output ay anchor first)
 
     sdestroy(&workStk);
-    // return final stack
 }
