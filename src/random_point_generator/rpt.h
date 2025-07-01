@@ -1,4 +1,4 @@
-#include "globals.h"
+#include "../globals.h"
 #include "immintrin.h"
 
-void rpt(Point *rGenAlloc[], int nSquareDimension, int nDesiredCount);
+void rpt(Point *rGenAlloc[], int nNumberRange, int nDesiredSize);
