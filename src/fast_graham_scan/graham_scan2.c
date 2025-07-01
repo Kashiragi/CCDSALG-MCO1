@@ -1,6 +1,9 @@
 #include "..\sortFiles\sort.c"
 #include "..\stackFiles\stack.c"
+#include <time.h>
+#include <stdio.h>
 
+#define
 //Graham's scan using fast version
 
 /**
@@ -53,12 +56,15 @@ int checkCCW(Point previous, Point current, Point next){
 void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSize){
     int i;
     point_sp workStk;
+    // step by step implementation using these key steps
+    // https://www.numberanalytics.com/blog/mastering-grahams-scan-algorithm
+
     // determine anchor point using search
     for (i = 1, anchor = points[0]; i < sampleSize; i++)
     if ((points[i].y < anchor.y) || (points[i].y == anchor.y && points[i].x < anchor.x))
     anchor = points[i];
     
-    // merge sort the array
+    // merge sort the array based on polar angles
     mergeSort(points,sampleSize);
     
     // initialize working stack
