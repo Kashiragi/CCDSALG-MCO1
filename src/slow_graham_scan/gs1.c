@@ -4,11 +4,16 @@ bool isccw(Point p1, Point p2, Point p3) { return (p2.x - p1.x) * (p3.y - p1.y) 
 
 void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int *nCHSize)
 {
+	// For time recording
+	clock_t start, end;
 	// Declarations
 	int i;
 	bool flag;
 	point_sp psp;
-	Point *out, *first = NULL, *second = NULL, ptdump = { 0,0 };
+	Point *first = NULL, *second = NULL, ptdump = { 0,0 };
+
+	// Start time recording
+	start = clock();
 
 	// Create temporary stack
 	assert(screate(&psp) == 1);
@@ -42,4 +47,8 @@ void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int
 	// Create an array from the temporary stack and then destroy the stack
 	assert((*nCHSize = sarray(&psp, arrConvexHull)) == psp->_DO_NOT_MODIFY_COUNT);
 	assert(sdestroy(&psp) == 1);
+
+	// Finish time recording
+	end = clock();
+	printf("Slow Graham scan finished. Took %ld clocks over %d points\n", end - start, nSize);
 }

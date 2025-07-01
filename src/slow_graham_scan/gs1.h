@@ -2,7 +2,9 @@
 #include "../sortFiles/sort.h"
 #include "../random_point_generator/rpt.h"
 
-#define RPT_SIZE 16
+#include "time.h" // for checking time length
+
+//#define RPT_SIZE 1000
 
 Point anchor;
 
