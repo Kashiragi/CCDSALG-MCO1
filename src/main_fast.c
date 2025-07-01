@@ -1,4 +1,4 @@
-#include "graham_fast.h"
+#include "fast_graham_scan/graham_fast.h"
 
 int main()
 {
