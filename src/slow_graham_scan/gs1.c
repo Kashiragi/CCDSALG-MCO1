@@ -15,7 +15,7 @@ void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int
 
 	// Find point with lowest y-value, will serve as anchor	
 	for (i = 1, anchor = arrptPoints[0]; i < nSize; i++)
-		if (arrptPoints[i].y < anchor.y)
+		if ((arrptPoints[i].y < anchor.y) || (arrptPoints[i].y == anchor.y && arrptPoints[i].x < anchor.x))
 			anchor = arrptPoints[i];
 
 	// Sort accordingly
