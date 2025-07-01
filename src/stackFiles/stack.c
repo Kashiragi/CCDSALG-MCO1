@@ -95,6 +95,20 @@ stackerr_t ssecond(point_sp stack, Point **out)
 	return 1;
 }
 
+stackerr_t sarray(point_sp *stack, Point **out)
+{
+	int i, j = (*stack)->_DO_NOT_MODIFY_COUNT;
+	if (0 == j)
+		return STACK_EMPTY;
+	if (NULL == (*out = malloc(j * sizeof(Point))))
+		return STACK_ERROR;
+	for (i = 0; i < j; i++)
+		spop(stack, &(*out)[i]);
+	for (i = 0; i < j; i++)
+		spush(stack, (*out)[i]);
+	return j;
+}
+
 stackerr_t sdestroy(point_sp *pstack)
 {
 	Point pop;
