@@ -32,3 +32,20 @@ void rpt(Point *rGenAlloc[], int nNumberRange, int nDesiredSize)
 		(*rGenAlloc)[i].y = (w % nNumberRange) + f;
 	}
 }
+
+void rpt_by_file(char path[], int nNumberRange, int nDesiredSize)
+{
+	// Declarations
+	int i;
+	FILE *output;
+	Point *rGenAlloc;
+	// Generate with rpt(...)
+	rpt(&rGenAlloc, nNumberRange, nDesiredSize);
+	// Write to file
+	assert(output = fopen(path, "w"));
+	fprintf(output, "%d\n", nDesiredSize);
+	for (i = 0; i < nDesiredSize; i++)
+		fprintf(output, "%lf %lf%s", rGenAlloc[i].x, rGenAlloc[i].y, (i + 1) < nDesiredSize ? "\n" : "");
+	fclose(output);
+	free(rGenAlloc);
+}
