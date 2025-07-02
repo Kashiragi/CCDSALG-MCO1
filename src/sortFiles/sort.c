@@ -6,13 +6,9 @@
 // Define PI constant
 #define PI 3.14159265358979323846
 
-Point anchor;  // define the extern from sort.h
+Point anchor;
 
-/**
- * computePolarAngle:
- *   Computes the angle (in radians) between the line from p1 to p2
- *   and the positive x-axis, normalized to [0, 2p).
- */
+// computePolarAngle
 double computePolarAngle(Point p1, Point p2) {
     double dx = p2.x - p1.x, dy = p2.y - p1.y;
     double angle = atan2(dy, dx);
@@ -20,20 +16,13 @@ double computePolarAngle(Point p1, Point p2) {
     return angle;
 }
 
-/**
- * computeDistance:
- *   Returns the Euclidean distance between p1 and p2.
- */
+// computeDistance
 double computeDistance(Point p1, Point p2) {
     double dx = p2.x - p1.x, dy = p2.y - p1.y;
     return sqrt(dx*dx + dy*dy);
 }
 
-/**
- * comparePoints:
- *   Compares two points a and b based on their polar angle
- *   around the global 'anchor' point, breaking ties by distance.
- */
+// comparePoints
 int comparePoints(Point a, Point b) {
     double angleA = computePolarAngle(anchor, a);
     double angleB = computePolarAngle(anchor, b);
@@ -46,18 +35,13 @@ int comparePoints(Point a, Point b) {
     return 0;
 }
 
-/**
- * selectionSort:
- *   A simple O(n²) “slow” sort that repeatedly selects the
- *   next-smallest point (by polar order) and swaps it into place.
- */
+// selectionSort (slow)
 void selectionSort(Point points[], int n) {
     for (int i = 0; i < n - 1; i++) {
         int minIdx = i;
         for (int j = i + 1; j < n; j++) {
-            if (comparePoints(points[j], points[minIdx]) < 0) {
+            if (comparePoints(points[j], points[minIdx]) < 0)
                 minIdx = j;
-            }
         }
         if (minIdx != i) {
             Point tmp = points[i];
@@ -67,16 +51,10 @@ void selectionSort(Point points[], int n) {
     }
 }
 
-/**
- * mergeSort:
- *   A divide-and-conquer O(n log n) “fast” sort using merge sort.
- */
+// mergeSort (fast)
 void mergeSort(Point points[], int n) {
     Point *temp = malloc(n * sizeof(Point));
-    if (!temp) {
-        fprintf(stderr, "mergeSort: out of memory\n");
-        return;
-    }
+    if (!temp) { fprintf(stderr, "mergeSort: out of memory\n"); return; }
     mergeSortHelper(points, temp, 0, n - 1);
     free(temp);
 }
@@ -91,24 +69,17 @@ void mergeSortHelper(Point points[], Point temp[], int left, int right) {
 }
 
 void merge(Point points[], Point temp[], int left, int mid, int right) {
-    for (int i = left; i <= right; i++)
-        temp[i] = points[i];
+    for (int i = left; i <= right; i++) temp[i] = points[i];
     int i = left, j = mid + 1, k = left;
     while (i <= mid && j <= right) {
-        if (comparePoints(temp[i], temp[j]) <= 0)
-            points[k++] = temp[i++];
-        else
-            points[k++] = temp[j++];
+        if (comparePoints(temp[i], temp[j]) <= 0) points[k++] = temp[i++];
+        else points[k++] = temp[j++];
     }
     while (i <= mid) points[k++] = temp[i++];
     while (j <= right) points[k++] = temp[j++];
 }
 
-/**
- * findAndSetAnchor:
- *   Finds the lowest-then-leftmost point,
- *   swaps it into points[0], and sets the global anchor.
- */
+// findAndSetAnchor
 void findAndSetAnchor(Point points[], int n) {
     if (n < 1) return;
     int minIdx = 0;
@@ -127,17 +98,11 @@ void findAndSetAnchor(Point points[], int n) {
     }
 }
 
-/**
- * sortPointsByPolarAngle:
- *   1) findAndSetAnchor,
- *   2) then sort points[1..n-1] by polar angle
- *      using either selectionSort (slow) or mergeSort (fast).
- */
+// sortPointsByPolarAngle
 void sortPointsByPolarAngle(Point points[], int n, int useSelectionSort) {
     if (n < 2) return;
     findAndSetAnchor(points, n);
-    if (useSelectionSort)
-        selectionSort(points + 1, n - 1);
-    else
-        mergeSort(points + 1, n - 1);
+    if (useSelectionSort) selectionSort(points + 1, n - 1);
+    else mergeSort(points + 1, n - 1);
 }
+
