@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "graham_fast.h"
 
 
@@ -29,7 +26,7 @@ int main() {
 
     printf("Fast graham scan in progress...\n");
     //sortPointsByPolarAngle(inPointStk, sampleSize, 0);
-   // graham_scan_fast(inPointStk, sampleSize, &arrHullPts, &hullSize);
+    graham_scan_fast(inPointStk, sampleSize, &arrHullPts, &hullSize);
 
 
 

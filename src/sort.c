@@ -1,7 +1,4 @@
 #include "sort.h"
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 // Define PI constant
 #define PI 3.14159265358979323846
@@ -96,13 +93,5 @@ void findAndSetAnchor(Point points[], int n) {
         points[0] = points[minIdx];
         points[minIdx] = tmp;
     }
-}
-
-// sortPointsByPolarAngle
-void sortPointsByPolarAngle(Point points[], int n, int useSelectionSort) {
-    if (n < 2) return;
-    findAndSetAnchor(points, n);
-    if (useSelectionSort) selectionSort(points + 1, n - 1);
-    else mergeSort(points + 1, n - 1);
 }
 

@@ -1,4 +1,4 @@
-#include "slow_graham_scan/graham_slow.h"
+#include "graham_slow.c"
 
 int main()
 {
@@ -23,7 +23,8 @@ int main()
         inPointStk[i] = inPoint;
         i++;
     }
-
+    for(i=0;i<sampleSize;i++)
+        printf("%lf %lf", inPointStk[i].x, inPointStk[i].y);
     fclose(inFile);
     
     //code for graham scan, incorporating sort and stack funcs
@@ -31,8 +32,11 @@ int main()
 
     // if you can, after graham, free inPointStk, then alloc space for arrHullPts kasi 32768 elements
     // otherwise, just declare 32768 for them both sa taas na agad tysm
-   
+    slow_graham_scan(inPointStk, sampleSize, &arrHullPts, &hullSize);
+
     // Output hull points
+    for(i=0;i<sampleSize;i++)
+        printf("%lf %lf", arrHullPts[i].x, arrHullPts[i].y);
     outFile = fopen(outFilename, "w");
     fprintf(outFile, "*Number of Points: %d\n", hullSize);
     while(i<hullSize && fprintf(outFile, "%.6lf %.6lf", arrHullPts[i].x, arrHullPts[i].y)==2){ i++; }

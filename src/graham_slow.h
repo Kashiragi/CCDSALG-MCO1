@@ -1,10 +1,5 @@
-#include "../stackFiles/stack.h"
-#include "../sortFiles/sort.h"
-#include "../random_point_generator/rpt.h"
-
-#include "time.h" // for checking time length
-
-//#define RPT_SIZE 1000
+#include "stack.h"
+#include "sort.h"
 
 Point anchor;
 

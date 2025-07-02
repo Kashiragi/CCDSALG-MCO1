@@ -3,11 +3,12 @@
 //to avoid double inclusion
 #define GLOBALS_H
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "stdbool.h"
-#include "math.h"
-#include "assert.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <assert.h>
+#include <time.h>
 
 // Max stack is 2^15 = 32768.
 #define MAX_STACK (1<<15)

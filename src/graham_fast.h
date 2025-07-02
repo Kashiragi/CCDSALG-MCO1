@@ -1,7 +1,5 @@
-#include "..\sortFiles\sort.h"
-#include "..\stackFiles\stack.h"
-#include <time.h>
-#include <stdio.h>
+#include "sort.h"
+#include "stack.h"
 
 Point anchor;
 
