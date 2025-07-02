@@ -1,4 +1,6 @@
-#include "graham_fast.h"
+#include "graham_fast.c"
+#include "stack.c"
+#include "sort.c"
 
 
 int main() {

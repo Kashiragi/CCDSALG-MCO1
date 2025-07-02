@@ -1,46 +1,54 @@
-#include "graham_slow.h"
+#include "graham_slow.c"
+#include "stack.c"
+#include "sort.c"
 
 int main()
 {
-    // declarations
     char inFilename[256], outFilename[256];
-    int sampleSize, hullSize, i=0;
-    Point inPoint, temp_point;
-    Point inPointStk[32768], *arrHullPts;
+    int sampleSize, hullSize;
+    int i = 0;
+    Point inPoint;
+    Point inPointStk[32768];
+    Point *arrHullPts;
     FILE *inFile, *outFile;
 
     printf("GRAHAM SCAN - Slow Version\n");
-    // file handling, to avoid other programs open
     printf("Give me CORRECT filename for input (ex. input1.txt): ");
-    scanf("%s", inFilename);
+    scanf("%255s", inFilename);
     printf("Give me CORRECT filename for output(ex. output1.txt): ");
-    scanf("%s", outFilename);
-    
-    // Input points
-    inFile = fopen(inFilename, "r");
-    fscanf(inFile, "%d", &sampleSize);
-    while(i<sampleSize && fscanf(inFile, "%lf %lf", &inPoint.x, &inPoint.y)==2){
-        inPointStk[i] = inPoint;
-        i++;
-    }
-    for(i=0;i<sampleSize;i++)
-        printf("%lf %lf", inPointStk[i].x, inPointStk[i].y);
-    fclose(inFile);
-    
-    //code for graham scan, incorporating sort and stack funcs
-    printf("Slow graham scan in progress...\n");
+    scanf("%255s", outFilename);
 
-    // if you can, after graham, free inPointStk, then alloc space for arrHullPts kasi 32768 elements
-    // otherwise, just declare 32768 for them both sa taas na agad tysm
+    inFile = fopen(inFilename, "r");
+    if (!inFile) { perror("fopen input"); return 1; }
+    fscanf(inFile, "%d", &sampleSize);
+    while (i < sampleSize && fscanf(inFile, "%lf %lf", &inPoint.x, &inPoint.y) == 2) {
+        inPointStk[i++] = inPoint;
+    }
+    fclose(inFile);
+
+    printf("Slow graham scan in progress...\n");
+    //sortPointsByPolarAngle(inPointStk, sampleSize, 0);
     slow_graham_scan(inPointStk, sampleSize, &arrHullPts, &hullSize);
 
-    // Output hull points
-    for(i=0;i<sampleSize;i++)
-        printf("%lf %lf", arrHullPts[i].x, arrHullPts[i].y);
-    outFile = fopen(outFilename, "w");
-    fprintf(outFile, "*Number of Points: %d\n", hullSize);
-    while(i<hullSize && fprintf(outFile, "%.6lf %.6lf", arrHullPts[i].x, arrHullPts[i].y)==2){ i++; }
 
+    // DEBUG: print hull to console
+    printf(">>> Hull has %d points:\n", hullSize);
+    for (int j = 0; j < hullSize; j++) {
+        printf("  arrHullPts[%2d] = (%.6f, %.6f)\n",
+               j, arrHullPts[j].x, arrHullPts[j].y);
+    }
+    printf(">>> End of hull dump\n\n");
+
+    // Write hull to output file
+    outFile = fopen(outFilename, "w");
+    if (!outFile) { perror("fopen output"); free(arrHullPts); return 1; }
+    fprintf(outFile, "%d\n", hullSize);
+    for (int k = 0; k < hullSize; k++) {
+        fprintf(outFile, "%.6lf %.6lf\n",
+                arrHullPts[k].x, arrHullPts[k].y);
+    }
     fclose(outFile);
+    free(arrHullPts);
+
     return 0;
 }
