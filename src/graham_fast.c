@@ -18,7 +18,6 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
     int i;
     point_sp workStk;
     //timer related
-    long long ctr;
     clock_t startTm, endTm;
 
     startTm = clock();
@@ -84,5 +83,5 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
     sdestroy(&workStk);
 
     endTm = clock();
-    printf("%6ld %15lf\n", sampleSize, (double)(endTm - startTm)); 
+    printf("%6d %15lf\n", sampleSize, (double)(endTm - startTm)); 
 }

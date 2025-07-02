@@ -2,8 +2,7 @@
 
 bool isccw(Point p1, Point p2, Point p3) { return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x) > 0; }
 
-void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int *nCHSize)
-{
+void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int *nCHSize){
 	// For time recording
 	clock_t start, end;
 	// Declarations

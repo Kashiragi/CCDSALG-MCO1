@@ -1,4 +1,4 @@
-#include "graham_slow.c"
+#include "graham_fast.h"
 
 // Test this Graham scan algorithm with a random set of points using rpt
 // NOTE: 

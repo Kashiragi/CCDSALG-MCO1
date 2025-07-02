@@ -3,7 +3,6 @@
 // Define PI constant
 #define PI 3.14159265358979323846
 
-Point anchor;
 
 // computePolarAngle
 double computePolarAngle(Point p1, Point p2) {
