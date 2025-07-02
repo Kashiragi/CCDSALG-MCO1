@@ -1,20 +1,22 @@
 #include "sort.h"
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-// contains the slow and fast sorting algo
+// Define PI constant
+#define PI 3.14159265358979323846
 
-// Function implementation
+Point anchor;  // define the extern from sort.h
 
 /**
  * computePolarAngle:
  *   Computes the angle (in radians) between the line from p1 to p2
- *   and the positive x-axis, normalized to [0, 2π).
+ *   and the positive x-axis, normalized to [0, 2p).
  */
 double computePolarAngle(Point p1, Point p2) {
     double dx = p2.x - p1.x, dy = p2.y - p1.y;
     double angle = atan2(dy, dx);
-    if (angle < 0) {
-        angle += 2 * M_PI;
-    }
+    if (angle < 0) angle += 2 * PI;
     return angle;
 }
 
@@ -24,35 +26,25 @@ double computePolarAngle(Point p1, Point p2) {
  */
 double computeDistance(Point p1, Point p2) {
     double dx = p2.x - p1.x, dy = p2.y - p1.y;
-    return sqrt(dx * dx + dy * dy);
+    return sqrt(dx*dx + dy*dy);
 }
 
 /**
  * comparePoints:
  *   Compares two points a and b based on their polar angle
  *   around the global 'anchor' point, breaking ties by distance.
- *
- *   Returns:
- *     <0 if a comes before b,
- *      0 if they are equivalent,
- *     >0 if b comes before a.
  */
 int comparePoints(Point a, Point b) {
     double angleA = computePolarAngle(anchor, a);
     double angleB = computePolarAngle(anchor, b);
     if (angleA < angleB) return -1;
     if (angleA > angleB) return 1;
-
     double distA = computeDistance(anchor, a);
     double distB = computeDistance(anchor, b);
     if (distA < distB) return -1;
     if (distA > distB) return 1;
-
     return 0;
 }
-
-
-// slow sorting algo
 
 /**
  * selectionSort:
@@ -61,22 +53,19 @@ int comparePoints(Point a, Point b) {
  */
 void selectionSort(Point points[], int n) {
     for (int i = 0; i < n - 1; i++) {
-        int minIndex = i;
+        int minIdx = i;
         for (int j = i + 1; j < n; j++) {
-            if (comparePoints(points[j], points[minIndex]) < 0) {
-                minIndex = j;
+            if (comparePoints(points[j], points[minIdx]) < 0) {
+                minIdx = j;
             }
         }
-        if (minIndex != i) {
+        if (minIdx != i) {
             Point tmp = points[i];
-            points[i] = points[minIndex];
-            points[minIndex] = tmp;
+            points[i] = points[minIdx];
+            points[minIdx] = tmp;
         }
     }
 }
-
-
-// fast sorting algo
 
 /**
  * mergeSort:
@@ -85,7 +74,7 @@ void selectionSort(Point points[], int n) {
 void mergeSort(Point points[], int n) {
     Point *temp = malloc(n * sizeof(Point));
     if (!temp) {
-        fprintf(stderr, "Error: Memory allocation failed in mergeSort\n");
+        fprintf(stderr, "mergeSort: out of memory\n");
         return;
     }
     mergeSortHelper(points, temp, 0, n - 1);
@@ -102,21 +91,53 @@ void mergeSortHelper(Point points[], Point temp[], int left, int right) {
 }
 
 void merge(Point points[], Point temp[], int left, int mid, int right) {
-    for (int i = left; i <= right; i++) {
+    for (int i = left; i <= right; i++)
         temp[i] = points[i];
-    }
     int i = left, j = mid + 1, k = left;
     while (i <= mid && j <= right) {
-        if (comparePoints(temp[i], temp[j]) <= 0) {
+        if (comparePoints(temp[i], temp[j]) <= 0)
             points[k++] = temp[i++];
-        } else {
+        else
             points[k++] = temp[j++];
+    }
+    while (i <= mid) points[k++] = temp[i++];
+    while (j <= right) points[k++] = temp[j++];
+}
+
+/**
+ * findAndSetAnchor:
+ *   Finds the lowest-then-leftmost point,
+ *   swaps it into points[0], and sets the global anchor.
+ */
+void findAndSetAnchor(Point points[], int n) {
+    if (n < 1) return;
+    int minIdx = 0;
+    anchor = points[0];
+    for (int i = 1; i < n; i++) {
+        if (points[i].y < anchor.y ||
+           (points[i].y == anchor.y && points[i].x < anchor.x)) {
+            anchor = points[i];
+            minIdx = i;
         }
     }
-    while (i <= mid) {
-        points[k++] = temp[i++];
+    if (minIdx != 0) {
+        Point tmp = points[0];
+        points[0] = points[minIdx];
+        points[minIdx] = tmp;
     }
-    while (j <= right) {
-        points[k++] = temp[j++];
-    }
+}
+
+/**
+ * sortPointsByPolarAngle:
+ *   1) findAndSetAnchor,
+ *   2) then sort points[1..n-1] by polar angle
+ *      using either selectionSort (slow) or mergeSort (fast).
+ */
+void sortPointsByPolarAngle(Point points[], int n, int useSelectionSort) {
+    if (n < 2) return;
+    findAndSetAnchor(points, n);
+    if (useSelectionSort)
+        selectionSort(points + 1, n - 1);
+    else
+        mergeSort(points + 1, n - 1);
 }
