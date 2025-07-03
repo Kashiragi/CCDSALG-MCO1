@@ -83,5 +83,5 @@ void graham_scan_fast(Point points[], int sampleSize, Point **hull, int *hullSiz
     sdestroy(&workStk);
 
     endTm = clock();
-	printf("Fast Graham scan finished. Took %lf ms over %d points\n", (double)(endTm - startTm), sampleSize);
+	printf("Fast Graham scan finished. Took %lf ms over %d points\n", (double)(endTm - startTm)/CLOCKS_PER_SEC * 1000.0, sampleSize);
 }

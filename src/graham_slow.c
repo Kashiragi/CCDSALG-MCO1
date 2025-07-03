@@ -49,5 +49,5 @@ void slow_graham_scan(Point arrptPoints[], int nSize, Point **arrConvexHull, int
 
 	// Finish time recording
 	end = clock();
-	printf("Slow Graham scan finished. Took %lf ms over %d points\n", (double)(end - start), nSize);
+	printf("Slow Graham scan finished. Took %lf ms over %d points\n", (double)(end - start)/CLOCKS_PER_SEC * 1000.0, nSize);
 }
