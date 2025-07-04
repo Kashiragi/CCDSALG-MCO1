@@ -1,23 +1,33 @@
+/**
+ * main2.c contains the driver class for implementing the graham scan, fast version
+ * 
+ * @author Salao, Queenie
+ * @author Saguin, VL Kirsten Camille
+*/
 #include "graham_fast.c"
 #include "stack.c"
 #include "sort.c"
 
 
 int main() {
+    // declarations
     char inFilename[256], outFilename[256];
     int sampleSize, hullSize;
     int i = 0;
-    Point inPoint;
+    Point inPoint; 
     Point inPointStk[32768];
     Point *arrHullPts;
     FILE *inFile, *outFile;
 
     printf("GRAHAM SCAN - Fast Version\n");
+
+    // filename handling
     printf("Give me CORRECT filename for input (ex. input1.txt): ");
     scanf("%255s", inFilename);
     printf("Give me CORRECT filename for output(ex. output1.txt): ");
     scanf("%255s", outFilename);
 
+    // opening the file containing INPUT POINTS
     inFile = fopen(inFilename, "r");
     if (!inFile) { perror("fopen input"); return 1; }
     fscanf(inFile, "%d", &sampleSize);
@@ -27,10 +37,8 @@ int main() {
     fclose(inFile);
 
     printf("Fast graham scan in progress...\n");
-    //sortPointsByPolarAngle(inPointStk, sampleSize, 0);
+
     graham_scan_fast(inPointStk, sampleSize, &arrHullPts, &hullSize);
-
-
 
     // DEBUG: print hull to console
     printf(">>> Hull has %d points:\n", hullSize);
@@ -40,7 +48,7 @@ int main() {
     }
     printf(">>> End of hull dump\n\n");
 
-    // Write hull to output file
+    // Write hull to output file containing HULL POINTS
     outFile = fopen(outFilename, "w");
     if (!outFile) { perror("fopen output"); free(arrHullPts); return 1; }
     fprintf(outFile, "%d\n", hullSize);
@@ -49,6 +57,8 @@ int main() {
                 arrHullPts[k].x, arrHullPts[k].y);
     }
     fclose(outFile);
+
+    // free up arrHullPts
     free(arrHullPts);
 
     return 0;

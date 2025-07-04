@@ -1,3 +1,11 @@
+/**
+ * globals.h contains all the constants, structs, and C standard libraries used throughout
+ * this project
+ * 
+ * @author Laguerta, Kurt Anjo
+ * @author Salao, Queenie
+ * @author Saguin, VL Kirsten Camille
+*/
 #ifndef GLOBALS_H 
 //used since globals is declared in two separate files that will be used by OTHER files
 //to avoid double inclusion

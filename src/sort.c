@@ -74,23 +74,3 @@ void merge(Point points[], Point temp[], int left, int mid, int right) {
     while (i <= mid) points[k++] = temp[i++];
     while (j <= right) points[k++] = temp[j++];
 }
-
-// findAndSetAnchor
-void findAndSetAnchor(Point points[], int n) {
-    if (n < 1) return;
-    int minIdx = 0;
-    anchor = points[0];
-    for (int i = 1; i < n; i++) {
-        if (points[i].y < anchor.y ||
-           (points[i].y == anchor.y && points[i].x < anchor.x)) {
-            anchor = points[i];
-            minIdx = i;
-        }
-    }
-    if (minIdx != 0) {
-        Point tmp = points[0];
-        points[0] = points[minIdx];
-        points[minIdx] = tmp;
-    }
-}
-
